@@ -25,3 +25,24 @@ main.site-shell { min-height: calc(100svh - 148px); }
 .skip-link:focus { top: 12px; }
 @media (min-width: 1100px) { .site-shell { width: min(100% - 96px, 1200px); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.home-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: 16px; padding-block: 32px 64px; align-items: start; }
+.panel { min-width: 0; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); padding: clamp(20px, 3vw, 32px); }
+.intro-panel { grid-column: 1 / -1; padding-block: clamp(32px, 5vw, 72px); }
+.eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 700; }
+.intro-panel h1 { margin: 8px 0 12px; font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.05; letter-spacing: -.055em; }
+.intro-copy { max-width: 65ch; color: var(--muted); font-size: clamp(1.05rem, 1.5vw, 1.25rem); }
+.external-links { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 28px 0 0; }
+.external-links a { display: inline-flex; padding: 8px 14px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; }
+.panel h2 { margin: 0 0 20px; font-size: 1.1rem; }
+.project-grid { display: grid; gap: 12px; }
+.project { border-top: 1px solid var(--border); padding-top: 16px; }
+.project h3 { margin: 0 0 6px; font-size: 1.15rem; overflow-wrap: anywhere; }
+.project p, .experience-panel p { margin: 0; color: var(--muted); max-width: 72ch; }
+.experience-panel ol, .focus-panel ul { margin: 0; padding-left: 1.2rem; }
+.experience-panel li + li, .focus-panel li + li { margin-top: 12px; }
+.experience-panel span { display: block; color: var(--muted); }
+@media (max-width: 719px) {
+  .home-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-block: 16px 48px; }
+  .intro-panel { grid-column: auto; }
+  .site-header { align-items: flex-start; padding-block: 16px; }
+}
