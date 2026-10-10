@@ -1,16 +1,17 @@
 ---
 import SiteHeader from '../components/SiteHeader.astro';
 import { site } from '../data/site';
+import { getPublishedWriting } from '../lib/writing';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
-  hasWriting?: boolean;
 }
-const { title = site.name, description = site.description, hasWriting = false } = Astro.props;
+const { title = site.name, description = site.description } = Astro.props;
 const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? new URL('https://7harshitsingh.github.io')).href;
+const hasWriting = (await getPublishedWriting()).length > 0;
 ---
 <!doctype html>
 <html lang="en">

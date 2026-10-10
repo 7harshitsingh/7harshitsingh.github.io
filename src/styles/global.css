@@ -46,3 +46,21 @@ main.site-shell { min-height: calc(100svh - 148px); }
   .intro-panel { grid-column: auto; }
   .site-header { align-items: flex-start; padding-block: 16px; }
 }
+.writing-index, .writing-article { padding-block: 32px 80px; }
+.writing-index { max-width: 860px; }
+.writing-index h1, .writing-article h1 { line-height: 1.12; letter-spacing: -.035em; }
+.empty-state { color: var(--muted); border-top: 1px solid var(--border); padding-top: 24px; }
+.post-list { list-style: none; padding: 0; margin: 32px 0 0; }
+.post-list li { border-top: 1px solid var(--border); padding: 22px 0; }
+.post-list h2 { margin: 0 0 6px; font-size: 1.25rem; }
+.post-list p, .writing-article header p { color: var(--muted); }
+.post-list time, .writing-article time { color: var(--muted); font-size: .85rem; }
+.writing-article { max-width: 72ch; }
+.back-link { display: inline-block; margin-bottom: 32px; }
+.writing-article header { border-bottom: 1px solid var(--border); padding-bottom: 28px; margin-bottom: 32px; }
+.article-tags { font-size: .85rem; }
+.prose { overflow-wrap: anywhere; }
+.prose :is(h2, h3) { margin-top: 2em; line-height: 1.2; }
+.prose :is(p, ul, ol, blockquote) { margin-block: 1.1em; }
+.prose pre { max-width: 100%; overflow-x: auto; padding: 16px; border: 1px solid var(--border); border-radius: 10px; }
+.prose img { max-width: 100%; height: auto; }
