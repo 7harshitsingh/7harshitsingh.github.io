@@ -1,0 +1,11 @@
+---
+interface Props { hasWriting: boolean }
+const { hasWriting } = Astro.props;
+---
+<header class="site-header site-shell">
+  <a class="brand" href="/">Harshit Singh</a>
+  <nav aria-label="Primary">
+    <a href="/">Home</a>
+    {hasWriting && <a href="/writing/">Writing</a>}
+  </nav>
+</header>

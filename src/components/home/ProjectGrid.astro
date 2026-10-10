@@ -1,0 +1,16 @@
+---
+import type { Project } from '../../data/site';
+interface Props { projects: Project[] }
+const { projects } = Astro.props;
+---
+<section class="panel work-panel" aria-labelledby="work-heading">
+  <h2 id="work-heading">Selected work</h2>
+  <div class="project-grid">
+    {projects.map((project) => (
+      <article class="project">
+        <h3><a href={project.href}>{project.title}</a></h3>
+        <p>{project.summary}</p>
+      </article>
+    ))}
+  </div>
+</section>

@@ -1,11 +1,29 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import ProjectGrid from '../components/home/ProjectGrid.astro';
+import ExperienceList from '../components/home/ExperienceList.astro';
+import { site } from '../data/site';
 ---
 
 <Layout>
-	<Welcome />
+  <div class="home-grid">
+    <section class="panel intro-panel" aria-labelledby="intro-heading">
+      <p class="eyebrow">Personal website</p>
+      <h1 id="intro-heading">{site.name}</h1>
+      {site.intro && <p class="intro-copy">{site.intro}</p>}
+      <ul class="external-links">
+        {site.links.map((link) => (
+          <li><a href={link.href} rel="me">{link.label}<span aria-hidden="true"> ↗</span></a></li>
+        ))}
+      </ul>
+    </section>
+    {site.projects.length > 0 && <ProjectGrid projects={site.projects} />}
+    {site.experience.length > 0 && <ExperienceList experience={site.experience} />}
+    {site.focus.length > 0 && (
+      <section class="panel focus-panel" aria-labelledby="focus-heading">
+        <h2 id="focus-heading">Technical focus</h2>
+        <ul>{site.focus.map((area) => <li>{area}</li>)}</ul>
+      </section>
+    )}
+  </div>
 </Layout>

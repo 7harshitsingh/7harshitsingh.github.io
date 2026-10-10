@@ -1,0 +1,29 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getPublishedWriting } from '../../lib/writing';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedWriting();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props as { post: CollectionEntry<'writing'> };
+const { Content } = await render(post);
+const dateLabel = new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' });
+---
+<Layout title={post.data.title} description={post.data.description}>
+  <article class="writing-article">
+    <a class="back-link" href="/writing/">← All writing</a>
+    <header>
+      <h1>{post.data.title}</h1>
+      <p>{post.data.description}</p>
+      <time datetime={post.data.date.toISOString().slice(0, 10)}>{dateLabel.format(post.data.date)}</time>
+      {post.data.tags.length > 0 && <p class="article-tags">{post.data.tags.join(' · ')}</p>}
+    </header>
+    <div class="prose"><Content /></div>
+  </article>
+</Layout>

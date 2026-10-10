@@ -1,5 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  output: 'static',
+  site: 'https://7harshitsingh.github.io',
+  outDir: process.env.ASTRO_OUT_DIR ?? './dist',
+});
