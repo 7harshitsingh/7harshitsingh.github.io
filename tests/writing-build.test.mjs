@@ -1,18 +1,28 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 
 const root = process.cwd();
-const content = join(root, 'src/content/writing');
-const dist = join(root, 'dist');
+const fixtureRoot = mkdtempSync(join(tmpdir(), 'harshit-writing-fixture-'));
+const content = join(fixtureRoot, 'content');
+const dist = join(fixtureRoot, 'dist');
 const draft = join(content, 'zz-plan-draft.md');
 const published = join(content, 'zz-plan-published.md');
 const invalid = join(content, 'zz-plan-invalid.md');
 
 function build() {
-  return spawnSync('npm', ['run', 'build'], { cwd: root, encoding: 'utf8' });
+  return spawnSync('npm', ['run', 'build'], {
+    cwd: root,
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      WRITING_CONTENT_DIR: content,
+      ASTRO_OUT_DIR: dist,
+    },
+  });
 }
 function expectBuild() {
   const result = build();
@@ -81,5 +91,6 @@ test('empty, implicit draft, published, and invalid writing', { timeout: 120_000
   } finally {
     for (const file of [draft, published, invalid]) rmSync(file, { force: true });
     expectBuild();
+    rmSync(fixtureRoot, { recursive: true, force: true });
   }
 });
