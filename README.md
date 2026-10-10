@@ -6,7 +6,7 @@ My single-page portfolio, built with Astro. It brings together my work in applie
 
 The screenshot shows local sample articles used to review the Writing card. They are excluded from the published build.
 
-**Planned URL:** [7harshitsingh.github.io](https://7harshitsingh.github.io/)
+**Website:** [7harshitsingh.github.io](https://7harshitsingh.github.io/)
 
 ## Run locally
 
