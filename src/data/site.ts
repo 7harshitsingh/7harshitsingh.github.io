@@ -33,7 +33,7 @@ export interface SiteData {
 
 export const site: SiteData = {
   name: 'Harshit Singh',
-  description: 'Harshit is an applied AI engineer working closely with AI agents, transformer models & frontier AI techstacks. Explore his work, experience, and writing.',
+  description: 'Harshit Singh (7harshitsingh) is an IIT Delhi (IITD) graduate, applied AI engineer and software engineer at L&T Finance, building AI agents and machine learning systems.',
   intro: 'building business-oriented production-ready AI systems',
   education: {
     degree: 'B.Tech, Textile & Fibre Engineering',

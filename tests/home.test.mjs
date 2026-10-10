@@ -26,7 +26,7 @@ test('the homepage contains a dedicated writing card', () => {
 
 test('home has identity, verified link, and no empty claims', () => {
   const html = readFileSync('dist/index.html', 'utf8');
-  assert.match(html, /<title>Harshit\(7harshitsingh\) - Applied AI Engineer<\/title>/);
+  assert.match(html, /<title>Harshit Singh \(7harshitsingh\) - Applied AI Engineer<\/title>/);
   assert.match(html, /href="\/pfp\.jpg"/);
   assert.match(html, /src="\/pfp\.jpg"/);
   assert.match(html, /class="home-grid"/);

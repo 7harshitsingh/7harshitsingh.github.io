@@ -3,7 +3,25 @@ import { site } from '../data/site';
 import '../styles/global.css';
 
 const canonical = new URL('/', Astro.site ?? new URL('https://7harshitsingh.github.io')).href;
-const pageTitle = 'Harshit(7harshitsingh) - Applied AI Engineer';
+const pageTitle = 'Harshit Singh (7harshitsingh) - Applied AI Engineer';
+const profileImage = new URL('/pfp.jpg', canonical).href;
+const profile = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  url: canonical,
+  mainEntity: {
+    '@type': 'Person',
+    '@id': `${canonical}#person`,
+    name: site.name,
+    alternateName: '7harshitsingh',
+    jobTitle: 'Applied AI Engineer',
+    description: site.description,
+    image: profileImage,
+    alumniOf: { '@type': 'CollegeOrUniversity', name: site.education.institution },
+    worksFor: { '@type': 'Organization', name: site.experience[0].organization },
+    sameAs: site.links.map((link) => link.href),
+  },
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -15,9 +33,15 @@ const pageTitle = 'Harshit(7harshitsingh) - Applied AI Engineer';
     <link rel="icon" type="image/jpeg" href="/pfp.jpg" />
     <link rel="canonical" href={canonical} />
     <meta name="description" content={site.description} />
+    <meta name="author" content={site.name} />
+    <meta property="og:type" content="profile" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={site.description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={profileImage} />
+    <meta property="og:image:alt" content="Harshit Singh" />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(profile).replace(/</g, '\\u003c')} />
     <title>{pageTitle}</title>
   </head>
   <body>
