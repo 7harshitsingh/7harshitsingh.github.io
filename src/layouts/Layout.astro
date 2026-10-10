@@ -10,7 +10,8 @@ interface Props {
 }
 const { title = site.name, description = site.description } = Astro.props;
 const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? new URL('https://7harshitsingh.github.io')).href;
+const canonicalPath = Astro.url.pathname === '/404/' ? '/404.html' : Astro.url.pathname;
+const canonical = new URL(canonicalPath, Astro.site ?? new URL('https://7harshitsingh.github.io')).href;
 const hasWriting = (await getPublishedWriting()).length > 0;
 ---
 <!doctype html>
