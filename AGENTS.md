@@ -1,3 +1,8 @@
+## Git workflow
+
+- Work directly on `master`; do not create feature branches or worktrees unless the user explicitly asks.
+- Include intended pending `.gitignore` updates in the next commit.
+
 ## Development
 
 When starting the dev server, use background mode:

@@ -16,9 +16,30 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.*
+!.env.example
+
+# local agent and cloud configuration
+.agents/
+.aws/
+.codex/
+
+# local editor state
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
 
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+# generated test, cache, and compiler output
+coverage/
+.cache/
+.eslintcache
+*.tsbuildinfo
+
+# locally-authored planning material
+docs/
