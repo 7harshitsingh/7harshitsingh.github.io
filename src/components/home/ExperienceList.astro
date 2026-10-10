@@ -3,14 +3,15 @@ import type { Experience } from '../../data/site';
 interface Props { experience: Experience[] }
 const { experience } = Astro.props;
 ---
-<section class="panel experience-panel" aria-labelledby="experience-heading">
-  <h2 id="experience-heading">Experience</h2>
+<section class="card experience-panel" aria-labelledby="experience-heading">
+  <h2 id="experience-heading">💼 Experience</h2>
   <ol>
     {experience.map((item) => (
       <li>
-        <strong>{item.role}</strong>
-        <span>{item.organization} · {item.period}</span>
+        <div class="experience-item-heading"><strong>{item.role}</strong><span>{item.period}</span></div>
+        <span class="organization">{item.organization}</span>
         {item.summary && <p>{item.summary}</p>}
+        {item.bullets && <ul class="experience-points">{item.bullets.map((point) => <li>{point}</li>)}</ul>}
       </li>
     ))}
   </ol>

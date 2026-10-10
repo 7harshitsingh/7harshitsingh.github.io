@@ -1,13 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const root = process.cwd();
 const content = join(root, 'src/content/writing');
-const article = join(content, 'zz-production-article.md');
-const output = join(root, 'dist/writing/zz-production-article/index.html');
+const slug = `zz-production-article-${process.pid}`;
+const article = join(content, `${slug}.md`);
+const output = join(root, 'dist/index.html');
 
 function run(command, args) {
   const { NODE_TEST_CONTEXT: _nodeTestContext, ...env } = process.env;
@@ -28,18 +29,18 @@ test('fixture publication checks preserve a real article artifact', { timeout: 1
     'draft: false',
     '---',
     'Published fixture body.',
-  ].join('\n'));
+  ].join('\n'), { flag: 'wx' });
 
   try {
-    assert.deepEqual(readdirSync(content).filter((name) => name.endsWith('.md')), ['zz-production-article.md']);
     const build = run('npm', ['run', 'build']);
     assert.equal(build.status, 0, build.stdout + build.stderr);
-    assert.ok(existsSync(output), 'published article was not built');
+    assert.ok(existsSync(output), 'homepage was not built');
+    assert.match(readFileSync(output, 'utf8'), /Published fixture body/);
     assert.ok(existsSync(article), 'build removed the production article source');
 
     const fixtures = run('node', ['--test', 'tests/writing-build.test.mjs']);
     assert.equal(fixtures.status, 0, fixtures.stdout + fixtures.stderr);
-    assert.ok(existsSync(output), 'fixture checks replaced the production artifact');
+    assert.match(readFileSync(output, 'utf8'), /Published fixture body/);
   } finally {
     rmSync(article, { force: true });
     const restore = run('npm', ['run', 'build']);

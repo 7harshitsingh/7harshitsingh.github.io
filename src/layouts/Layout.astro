@@ -1,18 +1,9 @@
 ---
-import SiteHeader from '../components/SiteHeader.astro';
 import { site } from '../data/site';
-import { getPublishedWriting } from '../lib/writing';
 import '../styles/global.css';
 
-interface Props {
-  title?: string;
-  description?: string;
-}
-const { title = site.name, description = site.description } = Astro.props;
-const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
-const canonicalPath = Astro.url.pathname === '/404/' ? '/404.html' : Astro.url.pathname;
-const canonical = new URL(canonicalPath, Astro.site ?? new URL('https://7harshitsingh.github.io')).href;
-const hasWriting = (await getPublishedWriting()).length > 0;
+const canonical = new URL('/', Astro.site ?? new URL('https://7harshitsingh.github.io')).href;
+const pageTitle = 'Harshit(7harshitsingh) - Applied AI Engineer';
 ---
 <!doctype html>
 <html lang="en">
@@ -20,18 +11,17 @@ const hasWriting = (await getPublishedWriting()).length > 0;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Medium.min.css" />
+    <link rel="icon" type="image/jpeg" href="/pfp.jpg" />
     <link rel="canonical" href={canonical} />
-    <meta name="description" content={description} />
+    <meta name="description" content={site.description} />
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={site.description} />
     <meta property="og:url" content={canonical} />
     <title>{pageTitle}</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <SiteHeader hasWriting={hasWriting} />
-    <main id="main" class="site-shell"><slot /></main>
-    <footer class="site-shell site-footer">© {new Date().getFullYear()} Harshit Singh</footer>
+    <main id="main" class="home-main"><slot /></main>
   </body>
 </html>

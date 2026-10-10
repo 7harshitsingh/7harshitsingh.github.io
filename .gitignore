@@ -43,3 +43,6 @@ coverage/
 
 # locally-authored planning material
 docs/
+
+# local-only writing previews for layout review
+src/content/writing/preview-*.md

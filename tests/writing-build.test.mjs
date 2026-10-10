@@ -2,11 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 
 const root = process.cwd();
-const fixtureRoot = mkdtempSync(join(tmpdir(), 'harshit-writing-fixture-'));
+mkdirSync(join(root, '.astro'), { recursive: true });
+const fixtureRoot = mkdtempSync(join(root, '.astro', 'writing-fixture-'));
 const content = join(fixtureRoot, 'content');
 const dist = join(fixtureRoot, 'dist');
 const draft = join(content, 'zz-plan-draft.md');
@@ -32,14 +32,19 @@ function html(path) {
   return readFileSync(join(dist, path), 'utf8');
 }
 
+function generatedHtml() {
+  return readdirSync(dist, { recursive: true })
+    .filter((name) => name.endsWith('.html'))
+    .sort();
+}
+
 test('empty, implicit draft, published, and invalid writing', { timeout: 120_000 }, () => {
   mkdirSync(content, { recursive: true });
   assert.deepEqual(readdirSync(content).filter((name) => name.endsWith('.md')), []);
   try {
     expectBuild();
-    assert.ok(existsSync(join(dist, 'writing/index.html')));
-    assert.match(html('writing/index.html'), /No articles published yet/);
-    assert.doesNotMatch(html('index.html'), /href="\/writing\/"/);
+    assert.deepEqual(generatedHtml(), ['index.html']);
+    assert.match(html('index.html'), /No articles published yet/);
 
     writeFileSync(draft, [
       '---',
@@ -50,9 +55,8 @@ test('empty, implicit draft, published, and invalid writing', { timeout: 120_000
       'Private fixture body.',
     ].join('\n'));
     expectBuild();
-    assert.ok(!existsSync(join(dist, 'writing/zz-plan-draft/index.html')));
-    assert.doesNotMatch(html('writing/index.html'), /Draft fixture/);
-    assert.doesNotMatch(html('index.html'), /href="\/writing\/"/);
+    assert.deepEqual(generatedHtml(), ['index.html']);
+    assert.doesNotMatch(html('index.html'), /Draft fixture|Private fixture body/);
 
     writeFileSync(published, [
       '---',
@@ -69,14 +73,12 @@ test('empty, implicit draft, published, and invalid writing', { timeout: 120_000
       '```',
     ].join('\n'));
     expectBuild();
-    assert.ok(existsSync(join(dist, 'writing/zz-plan-published/index.html')));
-    assert.match(html('writing/index.html'), /Published fixture/);
-    assert.match(html('writing/index.html'), /href="\/writing\/zz-plan-published\/"/);
-    assert.doesNotMatch(html('writing/index.html'), /Draft fixture/);
-    assert.match(html('index.html'), /href="\/writing\/"/);
-    assert.match(html('writing/zz-plan-published/index.html'), /<h1>Published fixture<\/h1>/);
-    assert.match(html('writing/zz-plan-published/index.html'), /<pre/);
-    assert.match(html('writing/zz-plan-published/index.html'), /https:\/\/7harshitsingh\.github\.io\/writing\/zz-plan-published\//);
+    assert.deepEqual(generatedHtml(), ['index.html']);
+    assert.match(html('index.html'), /Published fixture/);
+    assert.match(html('index.html'), /href="#writing-zz-plan-published"/);
+    assert.match(html('index.html'), /Published fixture body|A section/);
+    assert.match(html('index.html'), /<pre/);
+    assert.doesNotMatch(html('index.html'), /Draft fixture|Private fixture body/);
 
     writeFileSync(invalid, [
       '---',

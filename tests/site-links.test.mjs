@@ -32,11 +32,11 @@ function generatedTarget(file, value) {
     : target;
 }
 
-test('relative URLs on nested pages resolve from that page', () => {
-  assert.equal(
-    generatedTarget(join(dist, 'writing/published/index.html'), 'favicon.svg'),
-    join(dist, 'writing/published/favicon.svg'),
-  );
+test('writing fragment links point to articles in the homepage', () => {
+  const html = readFileSync(join(dist, 'index.html'), 'utf8');
+  for (const [, id] of html.matchAll(/href="#(writing-[^"]+)"/g)) {
+    assert.ok(html.includes(`id="${id}"`), `missing writing article: ${id}`);
+  }
 });
 
 test('Pages workflow exists and generated local URLs resolve', () => {

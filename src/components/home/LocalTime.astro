@@ -1,0 +1,24 @@
+<section class="card time-card" aria-labelledby="time-heading">
+  <h2 id="time-heading">📍 New Delhi, IN</h2>
+  <div id="local-time" class="time-display" aria-label="Current time in New Delhi, India">
+    <time id="local-clock">--:--:--</time>
+  </div>
+</section>
+
+<script>
+  const clockElement = document.getElementById('local-clock');
+  const timeFormatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+  });
+
+  function updateLocalTime() {
+    const now = new Date();
+    if (clockElement) {
+      clockElement.textContent = timeFormatter.format(now);
+      clockElement.setAttribute('datetime', now.toISOString());
+    }
+  }
+
+  updateLocalTime();
+  window.setInterval(updateLocalTime, 1000);
+</script>

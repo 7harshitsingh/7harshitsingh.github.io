@@ -2,14 +2,20 @@
 import type { Project } from '../../data/site';
 interface Props { projects: Project[] }
 const { projects } = Astro.props;
+const displayProjects = [...projects].sort((a, b) => Number(Boolean(b.stats)) - Number(Boolean(a.stats)));
 ---
-<section class="panel work-panel" aria-labelledby="work-heading">
-  <h2 id="work-heading">Selected work</h2>
-  <div class="project-grid">
-    {projects.map((project) => (
-      <article class="project">
-        <h3><a href={project.href}>{project.title}</a></h3>
+<section class="card projects-card" aria-labelledby="projects-heading">
+  <h2 id="projects-heading">🛠️ Projects</h2>
+  <div class="project-stack">
+    {displayProjects.map((project) => (
+      <article class:list={['project-card', { 'project-card-highlight': Boolean(project.stats) }]}>
+        <h3>{project.href ? <a href={project.href}>{project.title}</a> : project.title}</h3>
         <p>{project.summary}</p>
+        {project.stats && <p class="project-stats" aria-label={`GitHub statistics as of ${project.stats.asOf}`}>
+          <span>★ {project.stats.stars} stars</span>
+          <span>{project.stats.forks} forks</span>
+          <small>as of {project.stats.asOf}</small>
+        </p>}
       </article>
     ))}
   </div>

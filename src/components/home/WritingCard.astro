@@ -1,0 +1,87 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props { posts: CollectionEntry<'writing'>[] }
+const { posts } = Astro.props;
+const articles = await Promise.all(posts.map(async (post) => ({
+  post,
+  Content: (await render(post)).Content,
+})));
+const date = (value: Date) => new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+}).format(value);
+---
+<section class="card writing-card" aria-labelledby="writing-heading">
+  <div class="writing-header">
+    <h2 id="writing-heading">✍️ Writing</h2>
+    <button class="writing-back" type="button" aria-label="Back to writing list">← Back</button>
+  </div>
+  <div class="writing-scroll">
+    <div id="writing-list" class="writing-list">
+      {posts.length === 0 ? (
+        <p class="writing-empty">No articles published yet. Notes on agents, models, and things I build will appear here.</p>
+      ) : (
+        <ol class="writing-entries">
+          {posts.map((post) => (
+            <li>
+              <a href={`#writing-${post.id}`} data-writing-open={post.id}>
+                <span class="writing-entry-title">{post.data.title}</span>
+                <span class="writing-entry-description">{post.data.description}</span>
+                <time datetime={post.data.date.toISOString()}>{date(post.data.date)}</time>
+                {post.data.tags.length > 0 && <span class="writing-tags">{post.data.tags.join(' · ')}</span>}
+              </a>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+    {articles.map(({ post, Content }) => (
+      <article class="writing-detail" id={`writing-${post.id}`} data-writing-article={post.id}>
+        <header>
+          <time datetime={post.data.date.toISOString()}>{date(post.data.date)}</time>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+          {post.data.tags.length > 0 && <p class="writing-tags">{post.data.tags.join(' · ')}</p>}
+        </header>
+        <div class="prose"><Content /></div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<script>
+  const card = document.querySelector<HTMLElement>('.writing-card');
+  if (card) {
+    const list = card.querySelector<HTMLElement>('#writing-list');
+    const scroll = card.querySelector<HTMLElement>('.writing-scroll');
+    const back = card.querySelector<HTMLButtonElement>('.writing-back');
+    const heading = card.querySelector<HTMLElement>('#writing-heading');
+    let selected: HTMLAnchorElement | null = null;
+
+    card.classList.add('writing-enhanced');
+    card.querySelectorAll<HTMLAnchorElement>('[data-writing-open]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const id = link.dataset.writingOpen;
+        const article = [...card.querySelectorAll<HTMLElement>('[data-writing-article]')]
+          .find((item) => item.dataset.writingArticle === id);
+        if (!article) return;
+        event.preventDefault();
+        card.querySelectorAll('.writing-detail').forEach((item) => item.classList.remove('is-active'));
+        article.classList.add('is-active');
+        card.classList.add('is-reading');
+        selected = link;
+        if (heading) heading.textContent = article.querySelector('h3')?.textContent ?? 'Writing';
+        if (scroll) scroll.scrollTop = 0;
+        back?.focus();
+      });
+    });
+    back?.addEventListener('click', () => {
+      card.classList.remove('is-reading');
+      card.querySelectorAll('.writing-detail').forEach((item) => item.classList.remove('is-active'));
+      if (heading) heading.textContent = '✍️ Writing';
+      if (scroll) scroll.scrollTop = 0;
+      if (list) list.hidden = false;
+      selected?.focus();
+    });
+  }
+</script>
