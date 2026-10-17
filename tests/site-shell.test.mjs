@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 
 test('home is a static root site with canonical metadata', () => {
   const html = readFileSync('dist/index.html', 'utf8');
@@ -27,4 +27,12 @@ test('homepage metadata identifies Harshit and his work', () => {
   assert.equal(profile.mainEntity.name, 'Harshit Singh');
   assert.equal(profile.mainEntity.alternateName, '7harshitsingh');
   assert.ok(profile.mainEntity.sameAs.includes('https://github.com/7harshitsingh'));
+});
+
+test('critical page assets avoid the oversized portrait and font stylesheet', () => {
+  const html = readFileSync('dist/index.html', 'utf8');
+  assert.doesNotMatch(html, /<link rel="stylesheet" href="https:\/\//);
+  assert.match(html, /<link rel="icon" type="image\/jpeg" href="\/avatar\.jpg"/);
+  assert.match(html, /<img src="\/avatar\.jpg"/);
+  assert.ok(statSync('dist/avatar.jpg').size < 30_000);
 });

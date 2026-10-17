@@ -29,8 +29,9 @@ const profile = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Medium.min.css" />
-    <link rel="icon" type="image/jpeg" href="/pfp.jpg" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Medium.latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/jpeg" href="/avatar.jpg" />
     <link rel="canonical" href={canonical} />
     <meta name="description" content={site.description} />
     <meta name="author" content={site.name} />
