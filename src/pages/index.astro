@@ -14,7 +14,7 @@ const posts = await getPublishedWriting();
   <div class="home-grid">
     <div class="home-content">
       <section class="card profile-card" aria-labelledby="intro-heading">
-        <span class="avatar"><img src="/avatar.jpg" alt="" width="72" height="72" /></span>
+        <span class="avatar"><picture><source type="image/webp" srcset="/avatar.webp 1x, /avatar@2x.webp 2x" /><img src="/avatar.jpg" alt="" width="72" height="72" /></picture></span>
         <div>
           <p class="eyebrow">Hello, I'm</p>
           <h1 id="intro-heading">{site.name}</h1>
@@ -56,7 +56,7 @@ const posts = await getPublishedWriting();
         <ul class="profile-links">
           {site.links.map((link) => (
             <li><a href={link.href} rel="me" aria-label={link.label} title={link.label}>
-              {link.label === 'GitHub' ? <img src="/icons/mark-github.svg" alt="" width="24" height="24" /> : link.label === 'LinkedIn' ? <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM7.93 18.75H4.96V9.2h2.97v9.55ZM6.45 7.9a1.72 1.72 0 1 1 0-3.44 1.72 1.72 0 0 1 0 3.44Zm12.3 10.85h-2.97V14.1c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44v4.73H9.5V9.2h2.85v1.3h.04c.4-.75 1.37-1.54 2.82-1.54 3.01 0 3.57 1.98 3.57 4.55v5.24Z"/></svg> : <span class="hf-icon" aria-hidden="true">🤗</span>}
+              {link.label === 'GitHub' ? <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/></svg> : link.label === 'LinkedIn' ? <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM7.93 18.75H4.96V9.2h2.97v9.55ZM6.45 7.9a1.72 1.72 0 1 1 0-3.44 1.72 1.72 0 0 1 0 3.44Zm12.3 10.85h-2.97V14.1c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44v4.73H9.5V9.2h2.85v1.3h.04c.4-.75 1.37-1.54 2.82-1.54 3.01 0 3.57 1.98 3.57 4.55v5.24Z"/></svg> : <span class="hf-icon" aria-hidden="true">🤗</span>}
             </a></li>
           ))}
           <li><a class="cv-link" href="/Harshit_Singh_IITD_LTFS_AI_Engineer.pdf" download="Harshit_Singh_CV.pdf" aria-label="Download CV" title="Download CV">

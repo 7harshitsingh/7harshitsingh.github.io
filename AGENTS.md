@@ -2,6 +2,7 @@
 
 - Work directly on `master`; do not create feature branches or worktrees unless the user explicitly asks.
 - Include intended pending `.gitignore` updates in the next commit.
+- Apply changes without committing. Commit only when the user explicitly asks. Never push; the user handles pushes.
 
 ## Development
 

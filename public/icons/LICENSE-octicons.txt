@@ -1,4 +1,4 @@
-The GitHub mark in mark-github.svg is from Primer Octicons:
+The GitHub mark used on the homepage is from Primer Octicons:
 https://github.com/primer/octicons
 
 MIT License

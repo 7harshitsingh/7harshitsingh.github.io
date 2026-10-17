@@ -1,0 +1,17 @@
+# Harshit Singh — Applied AI Engineer
+
+> Harshit Singh (7harshitsingh) is an IIT Delhi graduate and applied AI engineer focused on production AI systems, agents, language models, and machine learning.
+
+This is a single-page personal website. The homepage contains the public profile, experience, projects, skills, education, links, and any published writing. Writing is read within the homepage; there are no separate article pages.
+
+## Website
+
+- [Homepage](https://7harshitsingh.github.io/): The complete public website and primary source for current information.
+- [CV](https://7harshitsingh.github.io/Harshit_Singh_IITD_LTFS_AI_Engineer.pdf): Public resume in PDF format.
+
+## Other profiles and projects
+
+- [GitHub](https://github.com/7harshitsingh): Code and open-source projects.
+- [doc-qa](https://github.com/7harshitsingh/doc-qa): Featured AI project for document question answering.
+- [Hugging Face](https://huggingface.co/7harshitsingh): Models and AI projects.
+- [LinkedIn](https://www.linkedin.com/in/7harshitsingh/): Professional profile.

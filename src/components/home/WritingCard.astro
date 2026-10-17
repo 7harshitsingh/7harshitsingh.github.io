@@ -58,6 +58,43 @@ const date = (value: Date) => new Intl.DateTimeFormat('en', {
     const heading = card.querySelector<HTMLElement>('#writing-heading');
     let selected: HTMLAnchorElement | null = null;
 
+    async function renderRichContent(article: HTMLElement) {
+      if (article.dataset.richContent === 'ready') return;
+
+      const math = article.querySelectorAll<HTMLElement>('code.math-inline, code.math-display');
+      if (math.length) {
+        const [{ default: katex }, { default: katexCss }] = await Promise.all([import('katex'), import('katex/dist/katex.min.css?inline')]);
+        if (!document.getElementById('katex-styles')) {
+          const styles = document.createElement('style');
+          styles.id = 'katex-styles';
+          styles.textContent = katexCss;
+          document.head.append(styles);
+        }
+        math.forEach((code) => {
+          const displayMode = code.classList.contains('math-display');
+          const rendered = document.createElement(displayMode ? 'div' : 'span');
+          rendered.className = displayMode ? 'math-display' : 'math-inline';
+          katex.render(code.textContent ?? '', rendered, { displayMode, throwOnError: false });
+          (displayMode ? code.closest('pre') : code)?.replaceWith(rendered);
+        });
+      }
+
+      const sourceBlocks = article.querySelectorAll<HTMLElement>('pre[data-language="mermaid"]');
+      if (sourceBlocks.length) {
+        const { default: mermaid } = await import('mermaid');
+        mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'strict', flowchart: { htmlLabels: false } });
+        const diagrams = [...sourceBlocks].map((source) => {
+          const diagram = document.createElement('div');
+          diagram.className = 'writing-diagram mermaid';
+          diagram.textContent = source.textContent?.trim() ?? '';
+          source.replaceWith(diagram);
+          return diagram;
+        });
+        await mermaid.run({ nodes: diagrams });
+      }
+      article.dataset.richContent = 'ready';
+    }
+
     card.classList.add('writing-enhanced');
     card.querySelectorAll<HTMLAnchorElement>('[data-writing-open]').forEach((link) => {
       link.addEventListener('click', (event) => {
@@ -73,6 +110,7 @@ const date = (value: Date) => new Intl.DateTimeFormat('en', {
         if (heading) heading.textContent = article.querySelector('h3')?.textContent ?? 'Writing';
         if (scroll) scroll.scrollTop = 0;
         back?.focus();
+        void renderRichContent(article).catch((error) => console.error('Could not render article media', error));
       });
     });
     back?.addEventListener('click', () => {

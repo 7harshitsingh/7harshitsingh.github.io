@@ -4,7 +4,7 @@ import '../styles/global.css';
 
 const canonical = new URL('/', Astro.site ?? new URL('https://7harshitsingh.github.io')).href;
 const pageTitle = 'Harshit Singh (7harshitsingh) - Applied AI Engineer';
-const profileImage = new URL('/pfp.jpg', canonical).href;
+const profileImage = new URL('/avatar.jpg', canonical).href;
 const profile = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
@@ -32,6 +32,7 @@ const profile = {
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/misans@4.1.0/lib/Normal/MiSans-Medium.latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/jpeg" href="/avatar.jpg" />
+    <link rel="icon" type="image/webp" href="/avatar.webp" />
     <link rel="canonical" href={canonical} />
     <meta name="description" content={site.description} />
     <meta name="author" content={site.name} />

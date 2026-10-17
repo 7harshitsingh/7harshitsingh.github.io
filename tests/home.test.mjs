@@ -21,7 +21,7 @@ test('the homepage contains a dedicated writing card', () => {
   const html = readFileSync('dist/index.html', 'utf8');
   assert.match(html, /class="[^"]*writing-card/);
   assert.match(html, /id="writing-list"/);
-  assert.match(html, /No articles published yet|Preview: Notes on useful AI agents/);
+  assert.match(html, /Scaling Jev Decisions at Low Latency/);
 });
 
 test('home has identity, verified link, and no empty claims', () => {
@@ -38,7 +38,7 @@ test('home has identity, verified link, and no empty claims', () => {
   assert.doesNotMatch(html, /UTC \+05:30|What I.m exploring/);
   assert.match(html, /<h1[^>]*>Harshit Singh<\/h1>/);
   assert.match(html, /https:\/\/github\.com\/7harshitsingh/);
-  assert.match(html, /src="\/icons\/mark-github\.svg"/);
+  assert.match(html, /aria-label="GitHub"[^>]*><svg viewBox="0 0 24 24"/);
   assert.match(html, /Applied AI engineer/);
   assert.match(html, /IIT Delhi/);
   assert.match(html, /L&amp;T Finance/);

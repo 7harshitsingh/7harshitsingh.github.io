@@ -83,7 +83,7 @@ a:hover { color: white; }
 .profile-links { display: flex; flex-wrap: wrap; gap: 9px; margin: 0; padding: 0; list-style: none; }
 .profile-links a { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 11px; background: var(--soft); text-decoration: none; }
 .profile-links a:hover { border-color: #b1a58f; }
-.profile-links svg, .profile-links img { width: 24px; height: 24px; }
+.profile-links svg { width: 24px; height: 24px; }
 .profile-links .cv-link { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-color: #d8b36d; background: #292216; color: #f0d49c; font-size: 10px; font-weight: 700; line-height: 1; }
 .profile-links .cv-link:hover { border-color: #f0d49c; }
 .profile-links .cv-link svg { width: 19px; height: 19px; flex: none; }
@@ -114,6 +114,8 @@ a:hover { color: white; }
 .prose :is(h1, h2, h3) { margin-top: 1.5em; line-height: 1.2; }
 .prose :is(p, ul, ol, blockquote) { margin-block: 1.1em; }
 .prose pre { max-width: 100%; overflow-x: auto; padding: 13px; border: 1px solid var(--border); border-radius: 9px; }
+.prose .math-display, .prose .writing-diagram { max-width: 100%; margin: 1.25em 0; overflow-x: auto; }
+.prose .writing-diagram svg { display: block; width: 100%; height: auto; }
 .prose img { max-width: 100%; height: auto; }
 .prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
 .prose :is(th, td) { border: 1px solid var(--border); padding: 7px; }
